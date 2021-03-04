@@ -31,13 +31,50 @@ TODO: Add long description of the pod here.
   s.platform = :osx
   s.osx.deployment_target = "10.10"
 
-  s.source_files = '${POD_NAME}/Classes/**/*'
+  #Framework模式
+  s.subspec 'FrameworkMode' do |fm|
+    fm.vendored_frameworks = '${POD_NAME}/${POD_NAME}SDK/*.framework'
+  end
+  
+  #源码模式
+  s.subspec 'SourceMode' do |sm|
+    sm.source_files = [
+        '${POD_NAME}/Classes/**/*'
+      ]
+    sm.public_header_files = [
+        '${POD_NAME}/Classes/**/*.h'
+      ]
+  end
 
-  # s.resource_bundles = {
-  #   '${POD_NAME}' => ['${POD_NAME}/Assets/*.png']
-  # }
+  #核心代码
+  s.subspec 'Core' do |core|
+    # FX=all pod install; 所有库都使用framework模式安装
+    isAllFX = ENV['FX'] == "all" || ENV['${POD_NAME}_FX'] == "all"; 
+    # FX=dependency pod install; 依赖库使用framework模式安装
+    isDependencyFX = ENV['FX'] == "dependency" || ENV['${POD_NAME}_FX'] == "dependency"; 
+    isDependency = !!__FILE__[".cocoapods/repos"];
+    if isAllFX || (isDependency && isDependencyFX)
+      core.dependency '${POD_NAME}/FrameworkMode'
+    else
+      core.dependency '${POD_NAME}/SourceMode'
+    end
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'Cocoa'
-  # s.dependency 'AFNetworking', '~> 2.3'
+    core.dependency '${POD_NAME}/Interface'
+
+    # core.resource_bundles = {
+    #   '${POD_NAME}' => ['${POD_NAME}/Assets/*.png']
+    # }
+
+    # core.public_header_files = 'Pod/Classes/**/*.h'
+    # core.frameworks = 'UIKit', 'MapKit'
+    # core.dependency 'AFNetworking', '~> 2.3'
+  end
+  s.default_subspec = 'Core'
+
+  #对外接口
+  s.subspec 'Interface' do |interface|
+    interface.public_header_files = [
+      '${POD_NAME}/Interface/**/*.h'
+    ]
+  end
 end
