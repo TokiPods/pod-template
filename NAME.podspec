@@ -39,10 +39,21 @@ TODO: Add long description of the pod here.
   s.subspec 'SourceMode' do |sm|
     sm.source_files = [
         '${POD_NAME}/Classes/**/*'
+        '${POD_NAME}/Interface/**/*.m'
       ]
     sm.public_header_files = [
         '${POD_NAME}/Classes/**/*.h'
       ]
+  end
+
+  #对外接口
+  s.subspec 'Interface' do |interface|
+    interface.source_files = [
+      '${POD_NAME}/Interface/**/*.h',
+    ]
+    interface.public_header_files = [
+      '${POD_NAME}/Interface/**/*.h'
+    ]
   end
 
   #核心代码
@@ -56,9 +67,8 @@ TODO: Add long description of the pod here.
       core.dependency '${POD_NAME}/FrameworkMode'
     else
       core.dependency '${POD_NAME}/SourceMode'
+      core.dependency '${POD_NAME}/Interface'
     end
-
-    core.dependency '${POD_NAME}/Interface'
 
     # core.resource_bundles = {
     #   '${POD_NAME}' => ['${POD_NAME}/Assets/*.png']
@@ -69,11 +79,4 @@ TODO: Add long description of the pod here.
     # core.dependency 'AFNetworking', '~> 2.3'
   end
   s.default_subspec = 'Core'
-
-  #对外接口
-  s.subspec 'Interface' do |interface|
-    interface.public_header_files = [
-      '${POD_NAME}/Interface/**/*.h'
-    ]
-  end
 end
