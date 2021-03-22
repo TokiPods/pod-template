@@ -38,8 +38,8 @@ TODO: Add long description of the pod here.
   #源码模式
   s.subspec 'SourceMode' do |sm|
     sm.source_files = [
-        '${POD_NAME}/Classes/**/*'
-        '${POD_NAME}/Interface/**/*.m'
+        '${POD_NAME}/Classes/**/*',
+        # '${POD_NAME}/Interface/**/*.m'
       ]
     sm.public_header_files = [
         '${POD_NAME}/Classes/**/*.h'
@@ -47,14 +47,14 @@ TODO: Add long description of the pod here.
   end
 
   #对外接口
-  s.subspec 'Interface' do |interface|
-    interface.source_files = [
-      '${POD_NAME}/Interface/**/*.h',
-    ]
-    interface.public_header_files = [
-      '${POD_NAME}/Interface/**/*.h'
-    ]
-  end
+  # s.subspec 'Interface' do |interface|
+  #   interface.source_files = [
+  #     '${POD_NAME}/Interface/**/*.h',
+  #   ]
+  #   interface.public_header_files = [
+  #     '${POD_NAME}/Interface/**/*.h'
+  #   ]
+  # end
 
   #核心代码
   s.subspec 'Core' do |core|
@@ -67,7 +67,7 @@ TODO: Add long description of the pod here.
       core.dependency '${POD_NAME}/FrameworkMode'
     else
       core.dependency '${POD_NAME}/SourceMode'
-      core.dependency '${POD_NAME}/Interface'
+      # core.dependency '${POD_NAME}/Interface'
     end
 
     # core.resource_bundles = {
