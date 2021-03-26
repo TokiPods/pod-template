@@ -77,6 +77,8 @@ TODO: Add long description of the pod here.
     # core.public_header_files = 'Pod/Classes/**/*.h'
     # core.frameworks = 'UIKit', 'MapKit'
     # core.dependency 'AFNetworking', '~> 2.3'
+
+    # core.pod_target_xcconfig = { 'OTHER_LDFLAGS' => '-ObjC' }
   end
   s.default_subspec = 'Core'
 end
